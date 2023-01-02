@@ -1,0 +1,42 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. FIND-WAYS.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 N PIC 9(4) VALUE ZERO.
+       01 DP-N PIC 9(4) VALUE ZERO.
+       01 DP OCCURS 100 TIMES INDEXED BY I.
+          05 DP-I PIC 9(4) VALUE ZERO.
+       01 RESULT PIC 9(4) VALUE ZERO.
+       01 TEMP PIC 9(4) VALUE ZERO.
+
+       PROCEDURE DIVISION.
+       MAIN-LOGIC.
+         MOVE 6 TO N
+         PERFORM INITIALIZE-DP
+         MOVE 0 TO DP-N
+         PERFORM FIND-WAYS USING N, DP, RESULT
+         DISPLAY RESULT
+         GOBACK.
+
+       INITIALIZE-DP.
+         PERFORM VARYING I FROM 1 BY 1 UNTIL I > N
+           MOVE -1 TO DP-I(I)
+         END-PERFORM.
+
+       FIND-WAYS.
+         PROCEDURE DIVISION USING N, DP, RESULT.
+           IF N = 0
+             MOVE 1 TO RESULT
+           ELSE IF N < 0
+             MOVE 0 TO RESULT
+           ELSE IF DP-N > 0
+             MOVE DP-N TO RESULT
+           ELSE
+             MOVE FIND-WAYS(N-1, DP) TO TEMP
+             ADD TEMP TO DP-N
+             MOVE FIND-WAYS(N-2, DP) TO TEMP
+             ADD TEMP TO DP-N
+             MOVE FIND-WAYS(N-3, DP) TO TEMP
+             ADD TEMP TO DP-N
+             MOVE DP-N TO RESULT

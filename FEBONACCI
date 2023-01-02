@@ -1,0 +1,26 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. FIBONACCI.
+       
+       ENVIRONMENT DIVISION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+          01 N PIC 9(3).
+          01 FIBONACCI-VALUE PIC 9(3) VALUE 0.
+
+       PROCEDURE DIVISION.
+          ACCEPT N
+      *    MOVE 5 TO N
+          MOVE 0 TO FIBONACCI-VALUE
+          PERFORM UNTIL N = 0
+      *       DISPLAY 'TEST ' FIBONACCI-VALUE
+              IF N > 1
+                  ADD N TO FIBONACCI-VALUE GIVING FIBONACCI-VALUE
+              ELSE
+                  ADD 1 TO FIBONACCI-VALUE giving FIBONACCI-VALUE
+              END-IF
+              SUBTRACT 1 FROM N giving N
+          END-PERFORM
+          DISPLAY FIBONACCI-VALUE
+          STOP RUN.
+

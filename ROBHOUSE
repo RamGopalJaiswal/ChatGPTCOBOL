@@ -1,0 +1,40 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. ROB-HOUSES.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 N PIC 9(4) VALUE ZERO.
+       01 M PIC 9(4) VALUE ZERO.
+       01 AMOUNT OCCURS 100 TIMES INDEXED BY I.
+          05 AMOUNT-I PIC 9(4) VALUE ZERO.
+       01 DP OCCURS 100 TIMES INDEXED BY I.
+          05 DP-I PIC 9(4) VALUE ZERO.
+
+       PROCEDURE DIVISION.
+       MAIN-LOGIC.
+         MOVE 6 TO N
+         MOVE 10 TO AMOUNT(1)
+         MOVE 20 TO AMOUNT(2)
+         MOVE 30 TO AMOUNT(3)
+         MOVE 40 TO AMOUNT(4)
+         MOVE 50 TO AMOUNT(5)
+         MOVE 60 TO AMOUNT(6)
+         MOVE 0 TO DP(1)
+         PERFORM ROB-HOUSES 
+         DISPLAY DP(N)
+         GOBACK.
+
+       ROB-HOUSES.
+         
+           IF N = 1
+             MOVE 0 TO DP(N)
+           ELSE IF N = 2
+             MOVE AMOUNT(1) TO DP(N)
+           ELSE
+             subtract 2 from N giving M
+             MOVE M TO N
+             ADD AMOUNT-I(N) TO DP-I(N)
+             subtract 1 from N giving M
+             MOVE M TO N
+             IF DP(M) > DP(N)
+               MOVE DP(M) TO DP(N).

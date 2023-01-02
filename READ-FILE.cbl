@@ -1,0 +1,34 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. READ-FILE.
+
+       ENVIRONMENT DIVISION.
+       INPUT-OUTPUT SECTION.
+       FILE-CONTROL.
+          SELECT INPUT-FILE
+             ASSIGN TO "input.txt"
+             ORGANIZATION IS LINE SEQUENTIAL.
+
+       DATA DIVISION.
+       FILE SECTION.
+          FD INPUT-FILE
+              RECORDING MODE IS F
+              LABEL RECORDS ARE OMITTED.
+          01 INPUT-RECORD.            
+             05 INPUT-FIELD PIC X(80).
+       WORKING-STORAGE SECTION.
+         01 END-OF-FILE PIC X(1) VALUE 'N'.  
+
+         PROCEDURE DIVISION.
+           OPEN INPUT INPUT-FILE.
+           display 'program is running'
+           PERFORM UNTIL END-OF-FILE = 'Y'
+             display 'value of EOF :' END-OF-FILE
+             READ INPUT-FILE
+                AT END MOVE 'Y' TO END-OF-FILE
+                NOT AT END  
+                    DISPLAY INPUT-FIELD
+             end-read
+           END-PERFORM
+           CLOSE INPUT-FILE.
+           STOP RUN.
+

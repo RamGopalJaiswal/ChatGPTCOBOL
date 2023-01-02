@@ -1,0 +1,38 @@
+
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. NUM-FACTORS.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01 N PIC 9(4) VALUE ZERO.
+       01 RESULT PIC 9(4) VALUE ZERO.
+       01 D PIC 9(4).
+       01 C PIC 9(4).
+
+       PROCEDURE DIVISION.
+       MAIN-LOGIC.
+         MOVE 12 TO N
+         accept N
+         MOVE 0 TO RESULT
+         PERFORM FIND-FACTORS 
+      *   USING N, RESULT
+         DISPLAY RESULT
+         GOBACK.
+
+       FIND-FACTORS.
+         IF N = 1
+
+           ADD 1 TO RESULT
+         ELSE
+           divide N by 2 giving C remainder D
+           IF D = 0
+             ADD 1 TO RESULT
+             divide N by 2 giving C 
+             MOVE C TO N
+             PERFORM FIND-FACTORS 
+           ELSE
+             subtract 1 FROM N
+             PERFORM FIND-FACTORS
+           end-if
+         end-if.
+         

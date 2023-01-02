@@ -1,0 +1,61 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. SELECTION-SORT.
+
+      *In this example, the program defines an array called ARRAY with 10 elements, 
+      *each with a single field called ITEM. The program then performs a loop that 
+      *iterates over the elements of the array, sorting them in ascending order using
+      * the selection sort algorithm.
+      *
+      *The selection sort algorithm works by iterating over the array and selecting
+      * the smallest element at each iteration. It then swaps the selected element with
+      * the element at the current position in the array, effectively moving 
+      *the smallest element to the front of the array. This process is repeated 
+      *until the array is sorted.
+      *
+      *In the COBOL program, the outer loop (PERFORM VARYING I FROM 1 BY 1 UNTIL I > 10)
+      * iterates over the elements of the array, while the inner loop 
+      *(PERFORM VARYING J FROM I + 1 BY 1 UNTIL J > 10) searches for the smallest element
+      * starting at the current position. If the smallest element is found,
+      * it is swapped with the element at the current position using the MOVE statement.
+      * 
+      *The resulting sorted array is then displayed on the screen 
+      *using the DISPLAY statement.
+
+       ENVIRONMENT DIVISION.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+           01 ARRAY OCCURS 10 TIMES.
+               05 ITEM PIC 9(3).
+           01 I PIC 9(3).
+           01 J PIC 9(3).
+           01 MIN-VALUE PIC 9(3).
+           01 MIN-INDEX PIC 9(3).
+
+       PROCEDURE DIVISION.
+           MOVE 1 TO I
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 10
+               ACCEPT ITEM(I)
+              DISPLAY 'ITEM ' ITEM(I)
+           END-PERFORM
+           MOVE 1 TO I
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 10
+              MOVE ITEM(I) TO MIN-VALUE
+              MOVE I TO MIN-INDEX
+              ADD 1 TO I GIVING J
+              PERFORM VARYING J FROM J BY 1 UNTIL J > 10
+                 IF ITEM(J) < MIN-VALUE
+                    MOVE ITEM(J) TO MIN-VALUE
+                    MOVE J TO MIN-INDEX
+                 END-IF
+              END-PERFORM
+              IF MIN-INDEX > I
+                 MOVE ITEM(I) TO ITEM(MIN-INDEX)
+                 MOVE MIN-VALUE TO ITEM(I)
+              END-IF
+           END-PERFORM
+           MOVE 1 TO I
+           PERFORM VARYING I FROM 1 BY 1 UNTIL I > 10
+               DISPLAY 'SORTED ARRAY VALUE1 : ' I ':' ITEM(I)
+           END-PERFORM
+           STOP RUN.
